@@ -393,6 +393,68 @@ conda activate jepa
 python setup.py install
 ```
 
+### To run on AWS
+Use ami - Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.2.0 (Ubuntu 20.04) 20240521
+ami-05a1fdc12eccdf405   
+
+instance type: g5.16xlarge   
+
+for instance disk size choose : 1024 GB   
+
+Then run setup  
+
+sudo pip3 uninstall -y torch torchvision torchaudio
+pip3 uninstall -y torch torchvision torchaudio
+pip3 cache purge
+
+Got error -> ImportError: /opt/conda/envs/jepa/lib/python3.9/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommRegister
+
+https://github.com/pytorch/pytorch/issues/119932
+
+
+https://pytorch.org/get-started/previous-versions/
+conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cuda=12.1 -c pytorch -c nvidia
+
+
+to find cuda version   
+nvcc --version
+
+to find the cuda devices
+nvidia-smi  -L
+
+
+python -m evals.main   --fname configs/evals/vitl16_in1k.yaml   --devices cuda:0
+
+
+>>error
+[Errno 13] Permission denied: '/your_absolute_file_path_to_directory_where_pretrained_models_are_contained'
+
+mkdir model_weights
+
+cd model_weights/
+
+wget https://dl.fbaipublicfiles.com/jepa/vitl16/in1k-probe.pth.tar
+
+Change configs/evals/vitl16_in1k.yaml"
+replace /your_absolute_file_path_to_directory_where_pretrained_models_are_contained/ with /home/ubuntu/jepa/model_weights
+
+replace checkpoint: jepa-latest.pth.tar with checkpoint: in1k-probe.pth.tar
+
+cd ..
+mkdir my_image_datasets
+cd my_image_datasets
+midir -p imagenet_full_size/061417/
+cd imagenet_full_size/061417/
+
+download data from this file -> https://www.kaggle.com/datasets/gpiosenka/butterfly-images40-species/data
+
+copy test and train folders from the archive above to imagenet_full_size/061417/
+
+
+
+
+
+
 ## License
 See the [LICENSE](./LICENSE) file for details about the license under which this code is made available.
 
