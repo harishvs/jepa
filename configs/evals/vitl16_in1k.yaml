@@ -4,7 +4,7 @@ tag: in1k-16f
 eval_name: image_classification_frozen
 resume_checkpoint: false
 data:
-  root_path: /my_image_datasets/
+  root_path: /home/ubuntu/jepa/my_image_datasets/
   image_folder: imagenet_full_size/061417/
   num_classes: 100
   resolution: 224
@@ -30,5 +30,5 @@ pretrain:
   tight_silu: false
   patch_size: 16
   folder: /home/ubuntu/jepa/model_weights
-  checkpoint: in1k-probe.pth.tar  # name of pretrained model file inside folder
+  checkpoint: vitl16.pth.tar  # name of pretrained model file inside folder
   write_tag: jepa

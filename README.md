@@ -403,17 +403,17 @@ for instance disk size choose : 1024 GB
 
 Then run setup  
 
-sudo pip3 uninstall -y torch torchvision torchaudio
-pip3 uninstall -y torch torchvision torchaudio
-pip3 cache purge
+then run 
+python -m evals.main   --fname configs/evals/vitl16_in1k.yaml   --devices cuda:0
+
+pip uninstall -y torch torchvision torchaudio && pip cache purge && conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cuda=12.1 -c pytorch -c nvidia
 
 Got error -> ImportError: /opt/conda/envs/jepa/lib/python3.9/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommRegister
 
 https://github.com/pytorch/pytorch/issues/119932
 
 
-https://pytorch.org/get-started/previous-versions/
-conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cuda=12.1 -c pytorch -c nvidia
+
 
 
 to find cuda version   
@@ -433,7 +433,7 @@ mkdir model_weights
 
 cd model_weights/
 
-wget https://dl.fbaipublicfiles.com/jepa/vitl16/in1k-probe.pth.tar
+wget https://dl.fbaipublicfiles.com/jepa/vitl16/vitl16.pth.tar
 
 Change configs/evals/vitl16_in1k.yaml"
 replace /your_absolute_file_path_to_directory_where_pretrained_models_are_contained/ with /home/ubuntu/jepa/model_weights
@@ -443,7 +443,7 @@ replace checkpoint: jepa-latest.pth.tar with checkpoint: in1k-probe.pth.tar
 cd ..
 mkdir my_image_datasets
 cd my_image_datasets
-midir -p imagenet_full_size/061417/
+mkdir -p imagenet_full_size/061417/
 cd imagenet_full_size/061417/
 
 download data from this file -> https://www.kaggle.com/datasets/gpiosenka/butterfly-images40-species/data
