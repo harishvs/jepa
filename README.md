@@ -394,8 +394,8 @@ python setup.py install
 ```
 
 ### To run on AWS
-Use ami - Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.2.0 (Ubuntu 20.04) 20240521
-ami-05a1fdc12eccdf405   
+Use ami - Deep Learning Base OSS Nvidia Driver GPU AMI (Ubuntu 20.04) ${YYYY-MM-DD}
+in us-east-2 - ami-01ee906f6d22d5769
 
 instance type: g5.16xlarge   
 
