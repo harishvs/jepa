@@ -441,15 +441,9 @@ replace /your_absolute_file_path_to_directory_where_pretrained_models_are_contai
 replace checkpoint: jepa-latest.pth.tar with checkpoint: in1k-probe.pth.tar
 
 cd ..
-mkdir my_image_datasets
-cd my_image_datasets
-mkdir -p imagenet_full_size/061417/
-cd imagenet_full_size/061417/
+wget https://drive.google.com/file/d/1duJU10si110CgFUB_lmEQkeLhg40X3td/view?usp=sharing
 
-download data from this file -> https://www.kaggle.com/datasets/gpiosenka/butterfly-images40-species/data
-
-copy test and train folders from the archive above to imagenet_full_size/061417/
-
+unzip my_image_datasets.zip
 
 
 
