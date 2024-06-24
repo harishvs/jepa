@@ -1,0 +1,6 @@
+Region: us-east-2
+Image:
+  Name: My Jepa Custom AMI for PCluster 3.0.0
+Build:
+  ParentImage: ami-0ab5d8adfc131aa29
+  InstanceType: g5.12xlarge

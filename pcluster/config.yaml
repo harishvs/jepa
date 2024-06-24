@@ -1,0 +1,55 @@
+Region: us-east-2
+Image:
+  Os : ubuntu2004
+  CustomAmi: ami-07cb5327493154625
+SharedStorage:
+  - MountDir: /shared
+    Name: fsx
+    StorageType: FsxLustre
+    FsxLustreSettings:
+      StorageCapacity: 2400   # GB 
+      DeploymentType: PERSISTENT_2  # Adjust performance as needed
+      PerUnitStorageThroughput: 1000
+      WeeklyMaintenanceStartTime: "3:02:30"
+HeadNode:
+  InstanceType: c5.xlarge
+  Networking:
+    SubnetId: subnet-0e19a389b1e361480
+    ElasticIp: false
+  Ssh:
+    KeyName: harish_us_east_2
+  LocalStorage:
+    RootVolume:
+        Size: 1024
+  Iam:
+    S3Access:
+    - BucketName: jepa-harish-fsx-import-bucket
+    AdditionalIamPolicies:
+    - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  CustomActions:
+    OnNodeConfigured:
+      Script: s3://jepa-harish-fsx-import-bucket//pcluster/postinstall.sh
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: compute
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Size: 1024
+      CapacityType: ONDEMAND
+      ComputeResources:
+        - Name: compute
+          InstanceType: g5.16xlarge
+          MinCount: 0
+          MaxCount: 4
+          Efa:
+            Enabled: true
+      Networking:
+        SubnetIds:
+          - subnet-0e19a389b1e361480
+        PlacementGroup:
+          Enabled: true
+      Iam:
+        AdditionalIamPolicies:
+        - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore          
