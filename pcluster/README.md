@@ -18,9 +18,8 @@ Note: Use pip to install pcluster and follow the directions above, If you use co
 ./create-cluster-config.sh
 
 ## Create the cluster
+./create_cluster.sh
 
-
-https://www.hpcworkshops.com/03-parallel-cluster-cli/08-configure-pcluster.html
 
 
 ## login to cluster
