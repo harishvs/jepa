@@ -1,6 +1,8 @@
 # Prereqs
 
 export SSH_KEY_NAME=<your key name>
+intall jq 
+`sudo apt-get install jq`
 
 # Install pcluster
 
@@ -77,9 +79,18 @@ EOF
 ## Submit your First Job
 sbatch submission_script.sbatch
 
+## Check status 
+squeue
+when the queue is empty, your job is done.
 
 After sometime you should see hello-world-job_1.out
 the logs will be in this file
 
 At this point your cluster is setup
+
+## verify that your compute nodes are set up and configured
+
+`sinfo`
+show there are two queues in your cluster
+
 

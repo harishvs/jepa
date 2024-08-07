@@ -14,29 +14,29 @@ SharedStorage:
 HeadNode:
   InstanceType: c5.xlarge
   Networking:
-    SubnetId: subnet-0e19a389b1e361480
+    SubnetId: subnet-006c9bdb703c4ff3d
     ElasticIp: false
   Ssh:
-    KeyName: harish_us_east_2
+    KeyName: 
   LocalStorage:
     RootVolume:
         Size: 1024
   Iam:
     S3Access:
-    - BucketName: jepa-harish-fsx-import-bucket
+    - BucketName: jepa-fsx-import-bucket
     AdditionalIamPolicies:
     - Policy: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
   CustomActions:
     OnNodeConfigured:
-      Script: s3://jepa-harish-fsx-import-bucket//pcluster/postinstall.sh
+      Script: s3://jepa-fsx-import-bucket/pcluster/postinstall.sh
 Scheduling:
   Scheduler: slurm
   SlurmQueues:
     - Name: compute
-      ComputeSettings:
-        LocalStorage:
-          RootVolume:
-            Size: 1024
+        ComputeSettings:
+      LocalStorage:
+        RootVolume:
+          Size: 1024
       CapacityType: ONDEMAND
       ComputeResources:
         - Name: compute
@@ -47,7 +47,7 @@ Scheduling:
             Enabled: true
       Networking:
         SubnetIds:
-          - subnet-0e19a389b1e361480
+          - subnet-006c9bdb703c4ff3d
         PlacementGroup:
           Enabled: true
       Iam:
