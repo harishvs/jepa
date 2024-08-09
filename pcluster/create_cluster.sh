@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 source common_env.sh
 
 pcluster create-cluster --cluster-name $CLUSTER_NAME  --cluster-configuration config.yaml
@@ -11,4 +12,3 @@ while [ ! "$PCLUSTER_STATUS" == *"COMPLETE"* ]; do
     sleep 10
 done
 
-echo "$PCLUSTER_AMIID is ready to use"

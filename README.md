@@ -393,28 +393,28 @@ conda activate jepa
 python setup.py install
 ```
 
-### To run on AWS
+## To run on AWS
+
+### Local setup on AWS
+
 Use ami - Deep Learning Base OSS Nvidia Driver GPU AMI (Ubuntu 20.04) ${YYYY-MM-DD}
-in us-east-2 - ami-01ee906f6d22d5769
+in us-east-2 amiid is: ami-01ee906f6d22d5769
 
-instance type: g5.16xlarge   
+instance type: g5.16xlarge
 
-for instance disk size choose : 1024 GB   
+for instance disk size choose : 1024 GB
 
-Then run setup  
+Then run steps under section setup  
 
-then run 
+then run
 python -m evals.main   --fname configs/evals/vitl16_in1k.yaml   --devices cuda:0
 
+At this point you will get an error 
+ImportError: /opt/conda/envs/jepa/lib/python3.9/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommRegister
+
+One of the The solution is to downgrade pytorch -> https://github.com/pytorch/pytorch/issues/119932
+
 pip uninstall -y torch torchvision torchaudio && pip cache purge && conda install pytorch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 pytorch-cuda=12.1 -c pytorch -c nvidia
-
-Got error -> ImportError: /opt/conda/envs/jepa/lib/python3.9/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommRegister
-
-https://github.com/pytorch/pytorch/issues/119932
-
-
-
-
 
 to find cuda version   
 nvcc --version
@@ -445,7 +445,13 @@ wget https://drive.google.com/file/d/1duJU10si110CgFUB_lmEQkeLhg40X3td/view?usp=
 
 unzip my_image_datasets.zip
 
+export path_to_save_stderr_and_stdout=logs_vjepa6
+export slurm_partition=compute
 
+python -m app.main_distributed \
+  --fname configs/pretrain/vitl16.yaml \
+  --folder $path_to_save_stderr_and_stdout \
+  --partition $slurm_partition
 
 
 

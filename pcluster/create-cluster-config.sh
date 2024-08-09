@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 source common_env.sh
 
 aws s3 mb $FSX_IMPORT_PATH --region $AWS_REGION
@@ -40,12 +41,14 @@ HeadNode:
       Script: s3://${FSX_IMPORT_PATH}/pcluster/postinstall.sh
 Scheduling:
   Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: TERMINATE  
   SlurmQueues:
     - Name: compute
-        ComputeSettings:
-      LocalStorage:
-        RootVolume:
-          Size: 1024
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Size: 1024
       CapacityType: ONDEMAND
       ComputeResources:
         - Name: compute

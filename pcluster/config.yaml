@@ -1,7 +1,7 @@
 Region: us-east-2
 Image:
   Os : ubuntu2004
-  CustomAmi: ami-07cb5327493154625
+  CustomAmi: ami-01e860256dbc1e08f
 SharedStorage:
   - MountDir: /shared
     Name: fsx
@@ -14,10 +14,10 @@ SharedStorage:
 HeadNode:
   InstanceType: c5.xlarge
   Networking:
-    SubnetId: subnet-006c9bdb703c4ff3d
+    SubnetId: subnet-0e19a389b1e361480
     ElasticIp: false
   Ssh:
-    KeyName: 
+    KeyName: harish_us_east_2
   LocalStorage:
     RootVolume:
         Size: 1024
@@ -31,23 +31,25 @@ HeadNode:
       Script: s3://jepa-fsx-import-bucket/pcluster/postinstall.sh
 Scheduling:
   Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: TERMINATE
   SlurmQueues:
     - Name: compute
-        ComputeSettings:
-      LocalStorage:
-        RootVolume:
-          Size: 1024
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            Size: 1024
       CapacityType: ONDEMAND
       ComputeResources:
         - Name: compute
           InstanceType: g5.16xlarge
           MinCount: 0
-          MaxCount: 4
+          MaxCount: 3
           Efa:
             Enabled: true
       Networking:
         SubnetIds:
-          - subnet-006c9bdb703c4ff3d
+          - subnet-0e19a389b1e361480
         PlacementGroup:
           Enabled: true
       Iam:

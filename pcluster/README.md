@@ -24,8 +24,16 @@ Note: Use pip to install pcluster and follow the directions above, If you use co
 
 
 
+if you are using this command to login to cluster, the second time or more after creating the cluster and you get an    
+error "Command 'pcluster' not found"  
+
+You need to in the right virtual env
+run this command `source ~/apc-ve/bin/activate`
+
+
 ## login to cluster
-pcluster ssh --cluster-name <cluster name> -i <your_ssh.pem> --region <region>
+run `export CLUSTER_NAME=<cluster_name`
+pcluster ssh --cluster-name $CLUSTER_NAME -i <your_ssh.pem> --region <region>
 
 
 ## Create the Hello World Application
@@ -93,4 +101,18 @@ At this point your cluster is setup
 `sinfo`
 show there are two queues in your cluster
 
+
+## update pcluster
+if you have to update the pcluster config, after you create it run these commands
+run `export CLUSTER_NAME=<cluster_name>`
+`pcluster update-cluster --cluster-name $CLUSTER_NAME --cluster-config config.yaml --dryrun true`
+use --dryrun true option for dry run
+
+## To display cluster details
+run `export CLUSTER_NAME=<cluster_name>`
+`pcluster describe-cluster -n $CLUSTER_NAME --region us-east-2`
+
+## ref:
+https://github.com/aws-samples/awsome-distributed-training/tree/main/1.architectures/2.aws-parallelcluster
+https://docs.aws.amazon.com/parallelcluster/latest/ug/cluster-configuration-file-v3.html
 
